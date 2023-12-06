@@ -32,14 +32,4 @@ class ProxyChannelMessageEvent(
 
     override val allowCancelled: Boolean
         get() = false
-
-    companion object {
-
-        @EventListener
-        fun e(e: ChannelMessageReceiveEvent) {
-            println("收信")
-            ProxyChannelMessageEvent(e).call()
-        }
-
-    }
 }

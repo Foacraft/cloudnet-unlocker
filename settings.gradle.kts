@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "cloudnet-unlocker"
+rootProject.name = "CloudNet-Unlocker"

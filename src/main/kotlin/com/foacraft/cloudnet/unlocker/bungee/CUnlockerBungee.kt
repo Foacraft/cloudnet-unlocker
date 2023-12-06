@@ -2,12 +2,13 @@ package com.foacraft.cloudnet.unlocker.bungee
 
 import com.foacraft.cloudnet.unlocker.CUnlocker
 import com.foacraft.cloudnet.unlocker.event.ProxyChannelMessageEvent
+import com.foacraft.cloudnet.unlocker.listener.NodeChannelMessageListener
 import eu.cloudnetservice.driver.event.EventManager
+import eu.cloudnetservice.driver.inject.InjectionLayer
 import eu.cloudnetservice.driver.util.ModuleHelper
 import eu.cloudnetservice.ext.platforminject.api.PlatformEntrypoint
 import eu.cloudnetservice.ext.platforminject.api.stereotype.Dependency
 import eu.cloudnetservice.ext.platforminject.api.stereotype.PlatformPlugin
-import eu.cloudnetservice.node.provider.NodeMessenger
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 import net.md_5.bungee.api.plugin.Plugin
@@ -33,8 +34,9 @@ class CUnlockerBungee @Inject constructor(
     val eventManager: EventManager,
 ) : PlatformEntrypoint {
 
-    init {
-        eventManager.registerListener(ProxyChannelMessageEvent)
+    override fun onLoad() {
+        eventManager.registerListener(NodeChannelMessageListener)
+        eventManager.registerListener(CUnlocker::class.java)
     }
 
     override fun onDisable() {
