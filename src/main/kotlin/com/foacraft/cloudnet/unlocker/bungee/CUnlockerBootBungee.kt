@@ -1,7 +1,8 @@
 package com.foacraft.cloudnet.unlocker.bungee
 
-import com.foacraft.cloudnet.unlocker.bukkit.CUnlockerBukkit
+import com.foacraft.cloudnet.unlocker.artifex.ArtifexPlatformPluginBungee
 import eu.cloudnetservice.ext.platforminject.loader.PlatformInjectSupportLoader
+import net.md_5.bungee.api.ProxyServer
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.platform.Plugin
@@ -24,6 +25,15 @@ object CUnlockerBootBungee : Plugin() {
             BungeePlugin.getInstance(),
             BungeePlugin.getInstance()::class.java.classLoader.parent
         )
+        // inject artifex
+        ProxyServer.getInstance().pluginManager.getPlugin("Artifex")?.let { plugin ->
+            PlatformInjectSupportLoader.loadPlugin(
+                "bungeecord",
+                ArtifexPlatformPluginBungee::class.java,
+                plugin,
+                plugin::class.java.classLoader.parent
+            )
+        }
     }
 
     override fun onDisable() {

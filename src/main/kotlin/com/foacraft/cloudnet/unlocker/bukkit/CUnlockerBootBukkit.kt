@@ -1,6 +1,8 @@
 package com.foacraft.cloudnet.unlocker.bukkit
 
+import com.foacraft.cloudnet.unlocker.artifex.ArtifexPlatformPluginBukkit
 import eu.cloudnetservice.ext.platforminject.loader.PlatformInjectSupportLoader
+import org.bukkit.Bukkit
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.platform.Plugin
@@ -23,6 +25,15 @@ object CUnlockerBootBukkit : Plugin() {
             BukkitPlugin.getInstance(),
             BukkitPlugin.getInstance()::class.java.classLoader.parent
         )
+        // inject artifex
+        Bukkit.getPluginManager().getPlugin("Artifex")?.let { plugin ->
+            PlatformInjectSupportLoader.loadPlugin(
+            "bukkit",
+                ArtifexPlatformPluginBukkit::class.java,
+                plugin,
+                plugin::class.java.classLoader.parent
+            )
+        }
     }
 
     override fun onDisable() {
